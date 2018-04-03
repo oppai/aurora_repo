@@ -4,6 +4,8 @@ defmodule AuroraRepo do
     quote do
       use Ecto.Repo, unquote(opts)
 
+      require Logger
+
       defoverridable [
         all: 2,
         stream: 2,

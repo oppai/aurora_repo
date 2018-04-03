@@ -35,8 +35,8 @@ by adding `aurora_repo` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:aurora_repo, "~> 0.1.0"},
-     {:mariaex, github: "xflagstudio/mariaex", branch: "aurora_failover_0_8_4", override: true}
+    {:aurora_repo, github: "xflagstudio/aurora_repo", tag: "0.1.1"}
+    {:mariaex, github: "xflagstudio/mariaex", branch: "aurora_failover_0_8_4", override: true}
   ]
 end
 ```

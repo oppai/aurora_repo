@@ -31,23 +31,27 @@ defmodule AuroraRepo do
       ]
 
       defp process_mariaex_error(e) do
-        # 1243 はER_UNKNOWN_STMT_HANDLE. zero-downtimeでバージョンアップされたmasterで、statement
-        # がクリアされてしまった場合などを想定
-        # 1290 はサーバ設定起因での statement 実行拒否系エラーコードで readonly 以外の場合も含まれるが
-        # いわゆる環境エラーなので詳細は見ない
         if !__MODULE__.in_transaction? do
-          case e.mariadb.code do
-            1243 ->
-              Logger.warn "error 1243: unknown statement handle. this may be caused by zero-downtime version upgrade."
-            1290 ->
-              Logger.warn "error 1290: this may cased during failover."
-            other ->
-              Logger.warn "error #{other}: unknown"
-          end
+          get_error_message_for_code(e.mariadb.code) |> Logger.warn
           stop(__MODULE__)
         end
         stacktrace = System.stacktrace
         reraise e, stacktrace
+      end
+
+      defp get_error_message_for_code(code) do
+          case code do
+            1243 ->
+              # 1243 はER_UNKNOWN_STMT_HANDLE. zero-downtimeでバージョンアップされたmasterで、statement
+              # がクリアされてしまった場合などを想定
+              "error 1243: unknown statement handle. this may be caused by zero-downtime version upgrade."
+            1290 ->
+              # 1290 はサーバ設定起因での statement 実行拒否系エラーコードで readonly 以外の場合も含まれるが
+              # いわゆる環境エラーなので詳細は見ない
+              "error 1290: this may caused during failover."
+            other ->
+              "error #{other}: unknown"
+          end
       end
 
       def all(queryable, opts \\ []) do

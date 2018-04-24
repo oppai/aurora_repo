@@ -6,6 +6,7 @@ defmodule AuroraRepo do
 
       require Logger
 
+      #https://github.com/elixir-lang/elixir/issues/3612
       defoverridable [
         all: 2,
         stream: 2,
@@ -27,7 +28,29 @@ defmodule AuroraRepo do
         insert_all: 3,
         update_all: 3,
         delete_all: 2,
-        transaction: 2
+        transaction: 2,
+
+        all: 1,
+        stream: 1,
+        get: 2,
+        get!: 2,
+        get_by: 2,
+        get_by!: 2,
+        one: 1,
+        one!: 1,
+        aggregate: 3,
+        insert: 1,
+        update: 1,
+        insert_or_update: 1,
+        delete: 1,
+        insert!: 1,
+        update!: 1,
+        insert_or_update!: 1,
+        delete!: 1,
+        insert_all: 2,
+        update_all: 2,
+        delete_all: 1,
+        transaction: 1
       ]
 
       defp process_mariaex_error(e) do

@@ -6,7 +6,7 @@ defmodule AuroraRepo.Mixfile do
       app: :aurora_repo,
       version: "0.1.3",
       elixir: "~> 1.5",
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
   end
@@ -21,8 +21,8 @@ defmodule AuroraRepo.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-     {:ecto, "~> 2.2"},
-     {:mariaex, "~> 0.8.4"}
+      {:ecto_sql, "~> 3.0"},
+      {:mariaex, "~> 0.9.0"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
     ]

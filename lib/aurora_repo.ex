@@ -56,7 +56,7 @@ defmodule AuroraRepo do
       defp process_mariaex_error(e) do
         if !__MODULE__.in_transaction? do
           get_error_message_for_code(e.mariadb.code) |> Logger.warn
-          stop(__MODULE__)
+          stop()
         end
         stacktrace = System.stacktrace
         reraise e, stacktrace

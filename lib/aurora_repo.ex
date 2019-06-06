@@ -53,12 +53,12 @@ defmodule AuroraRepo do
         transaction: 1
       ]
 
-      defp process_mariaex_error(e) do
+      defp process_mariaex_error(e, st) do
         if !__MODULE__.in_transaction? do
           get_error_message_for_code(e.mariadb.code) |> Logger.warn
           stop()
         end
-        reraise e, __STACKTRACE__
+        reraise e, st
       end
 
       defp get_error_message_for_code(code) do
@@ -81,7 +81,7 @@ defmodule AuroraRepo do
           super(queryable, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
 
@@ -90,7 +90,7 @@ defmodule AuroraRepo do
           super(queryable, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
 
@@ -99,7 +99,7 @@ defmodule AuroraRepo do
           super(queryable, id, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
 
@@ -108,7 +108,7 @@ defmodule AuroraRepo do
           super(queryable, id, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
 
@@ -117,7 +117,7 @@ defmodule AuroraRepo do
           super(queryable, clauses, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
 
@@ -126,7 +126,7 @@ defmodule AuroraRepo do
           super(queryable, clauses, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
 
@@ -135,7 +135,7 @@ defmodule AuroraRepo do
           super(queryable, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
 
@@ -144,7 +144,7 @@ defmodule AuroraRepo do
           super(queryable, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
 
@@ -153,7 +153,7 @@ defmodule AuroraRepo do
           super(queryable, aggregate, field, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
 
@@ -162,7 +162,7 @@ defmodule AuroraRepo do
           super(struct, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
       def update(struct, opts \\ []) do
@@ -170,7 +170,7 @@ defmodule AuroraRepo do
           super(struct, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
       def insert_or_update(struct, opts \\ []) do
@@ -178,7 +178,7 @@ defmodule AuroraRepo do
           super(struct, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
       def delete(struct, opts \\ []) do
@@ -186,7 +186,7 @@ defmodule AuroraRepo do
           super(struct, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
       def insert!(struct, opts \\ []) do
@@ -194,7 +194,7 @@ defmodule AuroraRepo do
           super(struct, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
       def update!(struct, opts \\ []) do
@@ -202,7 +202,7 @@ defmodule AuroraRepo do
           super(struct, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
       def insert_or_update!(struct, opts \\ []) do
@@ -210,7 +210,7 @@ defmodule AuroraRepo do
           super(struct, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
       def delete!(struct, opts \\ []) do
@@ -218,7 +218,7 @@ defmodule AuroraRepo do
           super(struct, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
       def insert_all(schema, entries, opts \\ []) do
@@ -226,7 +226,7 @@ defmodule AuroraRepo do
           super(schema, entries, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
       def update_all(schema, updates, opts \\ []) do
@@ -234,7 +234,7 @@ defmodule AuroraRepo do
           super(schema, updates, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
       def delete_all(queryable, opts \\ []) do
@@ -242,7 +242,7 @@ defmodule AuroraRepo do
           super(queryable, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
       def transaction(func_or_multi, opts \\ []) do
@@ -250,7 +250,7 @@ defmodule AuroraRepo do
           super(func_or_multi, opts)
         rescue
           e in Mariaex.Error ->
-            process_mariaex_error(e)
+            process_mariaex_error(e, __STACKTRACE__)
         end
       end
     end

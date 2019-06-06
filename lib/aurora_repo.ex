@@ -58,8 +58,7 @@ defmodule AuroraRepo do
           get_error_message_for_code(e.mariadb.code) |> Logger.warn
           stop()
         end
-        stacktrace = System.stacktrace
-        reraise e, stacktrace
+        reraise e, __STACKTRACE__
       end
 
       defp get_error_message_for_code(code) do
